@@ -19,3 +19,6 @@ make check      # formatting, types, linter, tests and the build
 
 The content comes from https://cms.seamlet.ru; `CMS_ORIGIN` points the site at another CMS, such as one run locally: `CMS_ORIGIN=http://localhost:4321 npm run dev`. The build takes the published content, so the CMS must answer.
 
+## Deployment
+
+«Опубликовать» in the CMS runs [`deploy.yml`](.github/workflows/deploy.yml), and so does every push to `main`: the image `ghcr.io/seamlet/zerno:<sha>` is built with the content published at that moment and deployed over SSH. The server side lives in a repository of its own; this one holds no addresses, keys or tokens. Pull requests get the checks only.

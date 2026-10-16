@@ -1,5 +1,6 @@
 # Checks on every pull request into main: formatting, types, the linter, the tests and the build. The
 # build takes the content published in the CMS, so the checks need https://cms.seamlet.ru to answer.
+# Deployment is a workflow of its own: deploy.yml.
 name: CI
 
 on:
