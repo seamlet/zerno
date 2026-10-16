@@ -1,0 +1,7 @@
+dist
+package-lock.json
+.astro
+.cyberzavod
+.claude
+CLAUDE.md
+AGENTS.md

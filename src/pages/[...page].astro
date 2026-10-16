@@ -1,0 +1,22 @@
+---
+// A page of the coffee shop, built with the content published in the CMS. Publishing in the CMS runs
+// the deployment workflow, which builds the pages again.
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import { pageParameterOf } from "../page-addresses";
+import site, { pages } from "../seamlet";
+
+export const getStaticPaths = (async () => {
+  // One load for all the pages, so that they show the same publication.
+  const content = await site.loadPublishedContent();
+  return Object.entries(pages).map(([address, Page]) => ({
+    params: { page: pageParameterOf(address) },
+    props: { Page, content },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { Page, content } = Astro.props;
+---
+
+<Page content={content} />

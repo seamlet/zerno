@@ -1,0 +1,28 @@
+# Checks on every pull request into main: formatting, types, the linter, the tests and the build. The
+# build takes the content published in the CMS, so the checks need https://cms.seamlet.ru to answer.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A new push to a pull request cancels its previous checks.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: make check
